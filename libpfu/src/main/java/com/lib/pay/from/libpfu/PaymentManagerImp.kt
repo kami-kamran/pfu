@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -35,6 +36,7 @@ class PaymentManagerImp @Inject constructor(
                 if (result.resultCode == Activity.RESULT_OK) {
                     val data: Intent? = result.data
                     val response = data?.getStringExtra("response")
+                    //Toast.makeText(this, "RESULT_OK: response ${data?.getStringExtra("response")?:"null"}", Toast.LENGTH_SHORT).show()
                     Log.d("PaymentManager", "response: $response")
                     if (response != null) {
                         paymentCallbacks?.onPaymentSuccess(response)
@@ -103,6 +105,7 @@ class PaymentManagerImp @Inject constructor(
     }
 
     private fun openQueryUrl(context: Context, url: String?) {
+       // Toast.makeText(context, "QueryUrl: ${url?:"null"}", Toast.LENGTH_SHORT).show()
         if (!url.isNullOrBlank()) {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             if (intent.resolveActivity(context.packageManager) != null) {

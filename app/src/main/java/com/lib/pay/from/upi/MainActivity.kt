@@ -1,5 +1,7 @@
 package com.lib.pay.from.upi
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -31,13 +33,17 @@ import com.lib.pay.from.libpfu.models.CreatePaymentResponse
 import com.lib.pay.from.libpfu.models.SubmitPaymentResponse
 import com.lib.pay.from.upi.ui.theme.LibPayFromUpiTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.Observable
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity(), PaymentCallbacks {
     @Inject
     lateinit var paymentManager: PaymentManager
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -87,6 +93,26 @@ class MainActivity : ComponentActivity(), PaymentCallbacks {
     override fun onPaymentSuccess(response: String) {
         Toast.makeText(this, "onPaymentSuccess", Toast.LENGTH_SHORT).show()
         Log.d("MainActivity", "onPaymentSuccess: $response")
+        /*val builder = AlertDialog.Builder(this)
+
+        // Set the title of the dialog
+        builder.setTitle("Payment Successful")
+
+        // Set the message of the dialog, displaying the response
+        builder.setMessage("Response: ${response}")
+
+        // Add a positive button with an action (e.g., dismiss the dialog)
+        builder.setPositiveButton("OK") { dialog, which ->
+            dialog.dismiss() // Dismiss the dialog when the button is clicked
+            // You can add further actions here if needed
+        }
+
+        // Prevent the user from dismissing the dialog by tapping outside
+        builder.setCancelable(false)
+
+        // Create and show the AlertDialog
+        val dialog = builder.create()
+        dialog.show()*/
     }
 
     override fun onPaymentFailed(error: String) {
